@@ -7,7 +7,7 @@
  */
 header("Content-Type: application/json;charset=UTF-8");
 header("Access-Control-Allow-Origin: http://localhost");
-include_once dirname(__FILE__) . '/function/IncludeFiles.php';
+include_once dirname(__FILE__) . '/function/include_db.php';
 $response = array();
 if (isset($_POST["infoJson"])) {
     require 'mail_lib/PHPMailerAutoload.php';
