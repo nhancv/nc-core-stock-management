@@ -24,6 +24,8 @@ class User extends Controller
         foreach ($userList as &$user) {
             array_push($response["user"], $user);
         }
-        echo $json->json_encode_utf8($response);
+//        echo $json->json_encode_utf8($response);
+        $m_user = new MUser($userList[0]);
+        echo $m_user->getName();
     }
 }

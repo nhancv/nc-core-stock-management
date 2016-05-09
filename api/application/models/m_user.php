@@ -20,12 +20,18 @@ class MUser
     private $update_date;
     private $author;
 
+    private $user_arr;
     /**
      * MUser constructor.
      * @param $user_arr
      */
     public function __construct($user_arr)
     {
+        $this->user_arr = $user_arr;
+        $this->mapping($this->user_arr);
+    }
+
+    private function mapping($user_arr){
         $this->uid = $user_arr["uid"];
         $this->pid = $user_arr["pid"];
         $this->password = $user_arr["password"];
@@ -38,7 +44,6 @@ class MUser
         $this->update_date = $user_arr["update_date"];
         $this->author = $user_arr["author"];
     }
-
     /**
      * @return mixed
      */
@@ -214,5 +219,23 @@ class MUser
     {
         $this->author = $author;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUserArr()
+    {
+        return $this->user_arr;
+    }
+
+    /**
+     * @param mixed $user_arr
+     */
+    public function setUserArr($user_arr)
+    {
+        $this->user_arr = $user_arr;
+        $this->mapping($this->user_arr);
+    }
+
 
 }
