@@ -6,10 +6,8 @@
  * Date: 5/11/16
  * Time: 2:40 AM
  */
-class MTransaction
+class MTransaction extends MBase
 {
-    private $uid;
-    private $pid;
     private $cus_id;
     private $prod_id;
     private $usr_id;
@@ -24,74 +22,6 @@ class MTransaction
     private $sender;
     private $status;
     private $notes;
-    private $create_date;
-    private $update_date;
-    private $author;
-
-    private $transaction_arr;
-    /**
-     * MTransaction constructor.
-     * @param $transaction_arr
-     */
-    public function __construct($transaction_arr)
-    {
-        $this->transaction_arr = $transaction_arr;
-        $this->mapping($this->transaction_arr);
-    }
-
-    private function mapping($transaction_arr){
-        $this->uid = $transaction_arr["uid"];
-        $this->pid = $transaction_arr["pid"];
-        $this->cus_id = $transaction_arr["cus_id"];
-        $this->prod_id = $transaction_arr["prod_id"];
-        $this->usr_id = $transaction_arr["usr_id"];
-        $this->type = $transaction_arr["type"];
-        $this->amount = $transaction_arr["amount"];
-        $this->payment_type = $transaction_arr["payment_type"];
-        $this->ship_id = $transaction_arr["ship_id"];
-        $this->price_total = $transaction_arr["price_total"];
-        $this->subscription_date = $transaction_arr["subscription_date"];
-        $this->delivery_date = $transaction_arr["delivery_date"];
-        $this->receiving_date = $transaction_arr["receiving_date"];
-        $this->sender = $transaction_arr["sender"];
-        $this->status = $transaction_arr["status"];
-        $this->notes = $transaction_arr["notes"];
-        $this->create_date = $transaction_arr["create_date"];
-        $this->update_date = $transaction_arr["update_date"];
-        $this->author = $transaction_arr["author"];
-
-    }
-    /**
-     * @return mixed
-     */
-    public function getUid()
-    {
-        return $this->uid;
-    }
-
-    /**
-     * @param mixed $uid
-     */
-    public function setUid($uid)
-    {
-        $this->uid = $uid;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPid()
-    {
-        return $this->pid;
-    }
-
-    /**
-     * @param mixed $pid
-     */
-    public function setPid($pid)
-    {
-        $this->pid = $pid;
-    }
 
     /**
      * @return mixed
@@ -317,68 +247,24 @@ class MTransaction
         $this->notes = $notes;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCreateDate()
+    protected function mapping($mapping_arr)
     {
-        return $this->create_date;
-    }
+        parent::mapping($mapping_arr);
+        $this->cus_id = $mapping_arr["cus_id"];
+        $this->prod_id = $mapping_arr["prod_id"];
+        $this->usr_id = $mapping_arr["usr_id"];
+        $this->type = $mapping_arr["type"];
+        $this->amount = $mapping_arr["amount"];
+        $this->payment_type = $mapping_arr["payment_type"];
+        $this->ship_id = $mapping_arr["ship_id"];
+        $this->price_total = $mapping_arr["price_total"];
+        $this->subscription_date = $mapping_arr["subscription_date"];
+        $this->delivery_date = $mapping_arr["delivery_date"];
+        $this->receiving_date = $mapping_arr["receiving_date"];
+        $this->sender = $mapping_arr["sender"];
+        $this->status = $mapping_arr["status"];
+        $this->notes = $mapping_arr["notes"];
 
-    /**
-     * @param mixed $create_date
-     */
-    public function setCreateDate($create_date)
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUpdateDate()
-    {
-        return $this->update_date;
-    }
-
-    /**
-     * @param mixed $update_date
-     */
-    public function setUpdateDate($update_date)
-    {
-        $this->update_date = $update_date;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAuthor()
-    {
-        return $this->author;
-    }
-
-    /**
-     * @param mixed $author
-     */
-    public function setAuthor($author)
-    {
-        $this->author = $author;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTransactionArr()
-    {
-        return $this->transaction_arr;
-    }
-
-    /**
-     * @param mixed $transaction_arr
-     */
-    public function setTransactionArr($transaction_arr)
-    {
-        $this->transaction_arr = $transaction_arr;
     }
 
 }
