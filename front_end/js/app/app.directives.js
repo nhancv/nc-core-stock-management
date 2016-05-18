@@ -5,7 +5,7 @@ angular.module('app.directives', [])
     .directive('ncBody', function () {
         return {
             restrict: 'EA',
-            template: '    <div ng-include="\'front_end/partials/body.html\'" style="min-height: calc(100vh - 128px); max-height: 700px;"></div>'
+            templateUrl: 'front_end/partials/body.html'
         };
     })
     .directive('blankDirective', function () {
