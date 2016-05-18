@@ -39,17 +39,16 @@
 
 </head>
 <body ng-controller="cBody">
-<div ui-view></div>
-<!-- We'll also add some navigation: -->
-<a ui-sref="state1">State 1</a>
-<a ui-sref="state2">State 2</a>
+<div layout="column">
+    <div ng-include="'front_end/partials/header.html'"></div>
+    <div ng-include="'front_end/partials/body.html'" style="min-height: calc(100vh - 128px); max-height: 700px;"></div>
+    <div ng-include="'front_end/partials/footer.html'"></div>
+</div>
+<script>
+    $(function () {
 
 
-<div ui-view="viewA"></div>
-<div ui-view="viewB"></div>
-<!-- Also a way to navigate -->
-<a ui-sref="route1">Route 1</a>
-<a ui-sref="route2">Route 2</a>
-
+    });
+</script>
 </body>
 </html>
