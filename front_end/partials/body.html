@@ -1,18 +1,22 @@
 <div ng-controller="cBody" layout="column" style="min-height: calc(100vh - 128px); max-height: 700px;" ng-cloak>
     <section layout="row" flex>
         <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="leftMenu"
-                    md-is-locked-open="$mdMedia('gt-md')">
+                    md-is-locked-open="$mdMedia('gt-sm')">
             <md-toolbar class="md-theme-indigo">
                 <h1 class="md-toolbar-tools">Sidenav Left</h1>
             </md-toolbar>
             <md-content layout-padding ng-controller="cLeftMenu">
-                <md-button ng-click="close()" class="md-primary" hide-gt-md>
+                <md-subheader class="md-no-sticky">User management</md-subheader>
+                <md-list-item ng-click="actionClick($event)">
+                    <img alt="test" ng-src="https://image.freepik.com/free-icon/super-simple-avatar_318-1018.jpg"
+                         class="md-avatar"/>
+                    <p>User</p>
+                </md-list-item>
+                <md-divider></md-divider>
+
+                <md-button ng-click="close()" class="md-primary" hide-gt-sm>
                     Close Sidenav Left
                 </md-button>
-                <p hide-md show-gt-md>
-                    This sidenav is locked open on your device. To go back to the default behavior,
-                    narrow your display.
-                </p>
             </md-content>
         </md-sidenav>
         <md-content flex layout-padding>
@@ -37,7 +41,7 @@
                 </p>
                 <div>
                     <md-button ng-click="toggleLeft()"
-                               class="md-primary" hide-gt-md>
+                               class="md-primary" hide-gt-sm>
                         Toggle left
                     </md-button>
                 </div>
