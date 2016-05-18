@@ -2,14 +2,9 @@
  * Created by nhancao on 5/18/16.
  */
 angular.module('app.controllers', [])
-    .controller('cBody', function ($scope, $timeout, $mdSidenav, $log) {
-        $scope.firstName = "John";
-        $scope.lastName = "Doe";
-        $scope.toggleLeft = buildDelayedToggler('left');
-        $scope.toggleRight = buildToggler('right');
-        $scope.isOpenRight = function () {
-            return $mdSidenav('right').isOpen();
-        };
+    .controller('cHome', function ($scope, $timeout, $mdSidenav, $log) {
+        $scope.toggleLeft = buildDelayedToggler('leftMenu');
+
         /**
          * Supplies a function that will continue to operate until the
          * time is up.
@@ -38,32 +33,26 @@ angular.module('app.controllers', [])
                     .then(function () {
                         $log.debug("toggle " + navID + " is done");
                     });
-            }, 200);
+            }, 100);
         }
 
-        function buildToggler(navID) {
-            return function () {
-                $mdSidenav(navID)
-                    .toggle()
-                    .then(function () {
-                        $log.debug("toggle " + navID + " is done");
-                    });
-            }
-        }
     })
-    .controller('LeftCtrl', function ($scope, $timeout, $mdSidenav, $log) {
+    .controller('cHeader', function ($scope, $timeout, $mdSidenav, $log) {
+
+    })
+    .controller('cFooter', function ($scope, $timeout, $mdSidenav, $log) {
+
+    })
+    .controller('cBody', function ($scope, $timeout, $mdSidenav, $log) {
+        $scope.firstName = "John";
+        $scope.lastName = "Doe";
+
+    })
+    .controller('cLeftMenu', function ($scope, $timeout, $mdSidenav, $log) {
         $scope.close = function () {
-            $mdSidenav('left').close()
+            $mdSidenav('leftMenu').close()
                 .then(function () {
                     $log.debug("close LEFT is done");
-                });
-        };
-    })
-    .controller('RightCtrl', function ($scope, $timeout, $mdSidenav, $log) {
-        $scope.close = function () {
-            $mdSidenav('right').close()
-                .then(function () {
-                    $log.debug("close RIGHT is done");
                 });
         };
     })
