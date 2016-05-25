@@ -43,23 +43,7 @@ angular.module('app.controllers', [])
     .controller('cFooter', function ($scope, $timeout, $mdSidenav, $log) {
 
     })
-    .controller('cBody', function ($scope, $timeout, $mdSidenav, $mdDialog, $log) {
-        $scope.firstName = "John";
-        $scope.lastName = "Doe";
-
-
-    })
     .controller('cLeftMenu', function ($scope, $timeout, $mdSidenav, $mdDialog, $log) {
-        $scope.actionClick = function (event) {
-            $mdDialog.show(
-                $mdDialog.alert()
-                    .title('Navigating')
-                    .textContent('Inspect ')
-                    .ariaLabel('Person inspect demo')
-                    .ok('Neat!')
-                    .targetEvent(event)
-            );
-        };
 
         $scope.close = function () {
             $mdSidenav('leftMenu').close()
@@ -67,6 +51,9 @@ angular.module('app.controllers', [])
                     $log.debug("close LEFT is done");
                 });
         };
+    })
+    .controller('cBody', function ($scope, $timeout, $mdSidenav, $mdDialog, $log) {
+
     })
 
     .controller('cBlank', function ($scope) {
