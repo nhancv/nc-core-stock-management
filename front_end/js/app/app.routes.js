@@ -6,32 +6,39 @@ angular.module('app.routes', [])
     // This project uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
     .config(function($stateProvider, $urlRouterProvider) {
-        // For any unmatched url, send to /route1
-        $urlRouterProvider.otherwise("/route1");
+        // For any unmatched url, send to /user
+        $urlRouterProvider.otherwise("/user");
 
         $stateProvider
-            .state('route1', {
-                url: "/route1",
-                templateUrl: "front_end/partials/state1.html"
+            .state('user', {
+                url: "/user",
+                templateUrl: "front_end/partials/p_user.html",
+                controller: 'cUser'
             })
-            .state('route1.list', {
-                url: "/list",
-                templateUrl: "front_end/partials/state1.list.html",
-                controller: function ($scope) {
-                    $scope.items = ["A", "List", "Of", "Items"];
-                }
+            .state('customer', {
+                url: "/customer",
+                templateUrl: "front_end/partials/p_customer.html",
+                controller: 'cCustomer'
             })
-
-            .state('route2', {
-                url: "/route2",
-                templateUrl: "front_end/partials/state2.html"
+            .state('product', {
+                url: "/product",
+                templateUrl: "front_end/partials/p_product.html",
+                controller: 'cProduct'
             })
-            .state('route2.list', {
-                url: "/list",
-                templateUrl: "front_end/partials/state2.list.html",
-                controller: function ($scope) {
-                    $scope.things = ["A", "Set", "Of", "Things"];
-                }
+            .state('shipping', {
+                url: "/shipping",
+                templateUrl: "front_end/partials/p_shipping.html",
+                controller: 'cShipping'
+            })
+            .state('stock', {
+                url: "/stock",
+                templateUrl: "front_end/partials/p_stock.html",
+                controller: 'cStock'
+            })
+            .state('transaction', {
+                url: "/transaction",
+                templateUrl: "front_end/partials/p_transaction.html",
+                controller: 'cTransaction'
             })
     })
 

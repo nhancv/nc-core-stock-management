@@ -51,66 +51,49 @@
                 </md-toolbar>
                 <md-content layout-padding ng-controller="cLeftMenu">
                     <md-subheader class="md-no-sticky">Features</md-subheader>
-                    <md-list-item ng-click="actionClick($event)">
+                    <md-list-item ui-sref="user">
                         <img alt="test" ng-src="front_end/img/icon-user.png"
                              class="md-avatar"/>
                         <p>User</p>
                     </md-list-item>
                     <md-divider></md-divider>
-                    <md-list-item ng-click="actionClick($event)">
+                    <md-list-item ui-sref="customer">
                         <img alt="test" ng-src="front_end/img/icon-customer.png"
                              class="md-avatar"/>
                         <p>Customer</p>
                     </md-list-item>
                     <md-divider></md-divider>
-                    <md-list-item ng-click="actionClick($event)">
+                    <md-list-item ui-sref="product">
                         <img alt="test" ng-src="front_end/img/icon-product.png"
                              class="md-avatar"/>
                         <p>Product</p>
                     </md-list-item>
                     <md-divider></md-divider>
-                    <md-list-item ng-click="actionClick($event)">
+                    <md-list-item ui-sref="shipping">
                         <img alt="test" ng-src="front_end/img/icon-shipping.png"
                              class="md-avatar"/>
                         <p>Shipping</p>
                     </md-list-item>
                     <md-divider></md-divider>
-                    <md-list-item ng-click="actionClick($event)">
+                    <md-list-item ui-sref="stock">
                         <img alt="test" ng-src="front_end/img/icon-stock.png"
                              class="md-avatar"/>
                         <p>Stock</p>
                     </md-list-item>
                     <md-divider></md-divider>
-                    <md-list-item ng-click="actionClick($event)">
+                    <md-list-item ui-sref="transaction">
                         <img alt="test" ng-src="front_end/img/icon-transaction.png"
                              class="md-avatar"/>
                         <p>Transaction</p>
                     </md-list-item>
                     <!--<md-divider></md-divider>-->
-
                     <md-button ng-click="close()" class="md-primary" hide-gt-sm>
                         Close Sidenav Left
                     </md-button>
                 </md-content>
             </md-sidenav>
             <md-content flex layout-padding>
-                <p><i>Best viewed in pop-out mode to see location changes. Click blue button on the right.</i></p>
-
-                <div class="navbar">
-                    <div class="navbar-inner">
-                        <a class="brand" href="#">Quick Start</a>
-                        <ul class="nav">
-                            <li><a ui-sref="route1">Route 1</a></li>
-                            <li><a ui-sref="route2">Route 2</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="span12">
-                        <div class="well" ui-view></div>
-                    </div>
-                </div>
+                <div ui-view></div>
             </md-content>
         </section>
     </div>
