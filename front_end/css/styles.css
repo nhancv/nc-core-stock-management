@@ -1,16 +1,28 @@
 body {
   color: #000;
 }
-
 md-sidenav md-content,
 md-sidenav md-list-item {
   padding-right: 0 !important;
 }
-
 md-sidenav md-divider {
   padding: 0 !important;
 }
-
 md-sidenav .active {
   background-color: rgba(158, 158, 158, 0.2);
+}
+#p_user md-tabs:not(.md-no-tab-content):not(.md-dynamic-height) {
+  min-height: 100%;
+}
+#p_user .label {
+  display: inherit;
+  padding: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
 }

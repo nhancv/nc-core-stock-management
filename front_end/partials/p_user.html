@@ -1,10 +1,11 @@
-<md-content class="md-padding">
-    <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect>
+<md-content id="p_user" style="height: 600px;">
+    <md-tabs style="height: 600px;" md-selected="selectedIndex" md-border-bottom md-autoselect>
         <md-tab ng-repeat="tab in tabs"
                 ng-disabled="tab.disabled"
                 label="{{tab.title}}">
             <div class="demo-tab tab{{$index%4}}" style="padding: 25px; text-align: center;">
                 <div ng-bind-html="tab.content"></div>
+                <div ng-include="tab.template"></div>
                 <br/>
                 <md-button class="md-primary md-raised" ng-click="removeTab( tab )" ng-disabled="tabs.length <= 1">
                     Remove Tab
