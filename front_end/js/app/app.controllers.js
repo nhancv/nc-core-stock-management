@@ -55,7 +55,7 @@ angular.module('app.controllers', [])
     .controller('cBody', function ($scope, $timeout, $mdSidenav, $mdDialog, $log) {
 
     })
-    .controller('cUser', function ($scope, $mdEditDialog, $q, $timeout, $log) {
+    .controller('cUser', function ($rootScope, $scope, $mdEditDialog, $q, $timeout, $log) {
         'use strict';
         var tabs = [
                 {
@@ -95,7 +95,13 @@ angular.module('app.controllers', [])
 
         //    table
         $scope.selected = [];
-        $scope.limitOptions = [5, 10, 15];
+        $scope.limitOptions = [5, 10, 15, {
+            label: 'All',
+            value: function () {
+                return $scope.desserts ? $scope.desserts.count : 0;
+            }
+        }];
+
 
         $scope.options = {
             rowSelection: true,
@@ -263,7 +269,7 @@ angular.module('app.controllers', [])
             $scope.promise = $timeout(function () {
                 // loading
             }, 2000);
-        };
+        },
 
         $scope.logItem = function (item) {
             console.log(item.name, 'was selected');
@@ -277,7 +283,6 @@ angular.module('app.controllers', [])
             console.log('page: ', page);
             console.log('limit: ', limit);
         }
-
 
     })
     .controller('cBlank', function ($scope) {
