@@ -2,14 +2,12 @@
  * Created by nhancao on 5/18/16.
  */
 angular.module('app.directives', [])
-    .directive('ncBody', function () {
+
+    .directive('blankDirective', function () {
         return {
             restrict: 'EA',
-            templateUrl: 'front_end/partials/body.html'
+            templateUrl: 'front_end/partials/404.html'
         };
-    })
-    .directive('blankDirective', function () {
-
     })
 
 

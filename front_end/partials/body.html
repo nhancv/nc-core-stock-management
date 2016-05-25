@@ -50,34 +50,23 @@
             </md-content>
         </md-sidenav>
         <md-content flex layout-padding>
-            <div ui-view></div>
-            <!-- We'll also add some navigation: -->
-            <a ui-sref="state1">State 1</a>
-            <a ui-sref="state2">State 2</a>
+            <p><i>Best viewed in pop-out mode to see location changes. Click blue button on the right.</i></p>
 
-
-            <div ui-view="viewA"></div>
-            <div ui-view="viewB"></div>
-            <!-- Also a way to navigate -->
-            <a ui-sref="route1">Route 1</a>
-            <a ui-sref="route2">Route 2</a>
-
-            <div layout="column" layout-fill layout-align="top center">
-                <p>
-                    The left sidenav will 'lock open' on a medium (>=960px wide) device.
-                </p>
-                <p>
-                    The right sidenav will focus on a specific child element.
-                </p>
-                <div>
-                    <md-button ng-click="toggleLeft()"
-                               class="md-primary" hide-gt-sm>
-                        Toggle left
-                    </md-button>
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <a class="brand" href="#">Quick Start</a>
+                    <ul class="nav">
+                        <li><a ui-sref="route1">Route 1</a></li>
+                        <li><a ui-sref="route2">Route 2</a></li>
+                    </ul>
                 </div>
-
             </div>
-            <div flex></div>
+
+            <div class="row">
+                <div class="span12">
+                    <div class="well" ui-view></div>
+                </div>
+            </div>
         </md-content>
     </section>
 </div>
