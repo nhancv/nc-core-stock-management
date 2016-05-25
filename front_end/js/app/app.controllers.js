@@ -55,7 +55,8 @@ angular.module('app.controllers', [])
     .controller('cBody', function ($scope, $timeout, $mdSidenav, $mdDialog, $log) {
 
     })
-    .controller('cUser', function ($rootScope, $scope, $mdEditDialog, $q, $timeout, $log) {
+
+    .controller('cUser', function ($rootScope, $scope, $mdDialog, $mdEditDialog, $q, $timeout, $log) {
         'use strict';
         var tabs = [
                 {
@@ -113,13 +114,42 @@ angular.module('app.controllers', [])
             limitSelect: true,
             pageSelect: true
         };
-
+        $rootScope.filter = {
+            options: {
+                updateOn: 'keyup change click blur',
+                debounce: {
+                    keyup: 10, click: 0, change: 10, blur: 10
+                }
+            }
+        };
         $scope.query = {
-            order: 'name',
+            filter: '',
+            order: 'nameToLower',
             limit: 5,
             page: 1
         };
+        $scope.addItem = function (event) {
+            $mdDialog.show({
+                clickOutsideToClose: true,
+                controller: 'addItemController',
+                controllerAs: 'ctrl',
+                focusOnOpen: false,
+                targetEvent: event,
+                templateUrl: 'front_end/partials/add-item-dialog.html',
+            }).then($scope.desserts);
+        };
 
+        $scope.delete = function (event) {
+            $mdDialog.show({
+                clickOutsideToClose: true,
+                controller: 'deleteController',
+                controllerAs: 'ctrl',
+                focusOnOpen: false,
+                targetEvent: event,
+                locals: {desserts: $scope.selected},
+                templateUrl: 'front_end/partials/delete-dialog.html',
+            }).then($scope.desserts);
+        };
         $scope.desserts = {
             "count": 9,
             "data": [
@@ -217,6 +247,15 @@ angular.module('app.controllers', [])
             ]
         };
 
+        $scope.removeFilter = function () {
+            $scope.filter.show = false;
+            $scope.query.filter = '';
+
+            if ($scope.filter.form.$dirty) {
+                $scope.filter.form.$setPristine();
+            }
+        };
+
         $scope.editComment = function (event, dessert) {
             event.stopPropagation(); // in case autoselect is enabled
 
@@ -271,9 +310,9 @@ angular.module('app.controllers', [])
             }, 2000);
         },
 
-        $scope.logItem = function (item) {
-            console.log(item.name, 'was selected');
-        };
+            $scope.logItem = function (item) {
+                console.log(item.name, 'was selected');
+            };
 
         $scope.logOrder = function (order) {
             console.log('order: ', order);
@@ -285,6 +324,57 @@ angular.module('app.controllers', [])
         }
 
     })
+    .controller('deleteController', function (desserts, $mdDialog, $scope, $q) {
+        'use strict';
+
+        this.cancel = $mdDialog.cancel;
+
+        function deleteDessert(dessert, index) {
+            var deferred = $nutrition.desserts.remove({id: dessert._id});
+
+            deferred.$promise.then(function () {
+                desserts.splice(index, 1);
+            });
+
+            return deferred.$promise;
+        }
+
+        function onComplete() {
+            $mdDialog.hide();
+        }
+
+        function error() {
+            $scope.error = 'Invalid secret.';
+        }
+
+        function success() {
+            $q.all(desserts.forEach(deleteDessert)).then(onComplete);
+        }
+
+        this.authorizeUser = function () {
+            $authorize.get({secret: $scope.authorize.secret}, success, error);
+        };
+
+    })
+    .controller('addItemController', function ($mdDialog, $scope) {
+        'use strict';
+
+        this.cancel = $mdDialog.cancel;
+
+        function success(dessert) {
+            $mdDialog.hide(dessert);
+        }
+
+        this.addItem = function () {
+            $scope.item.form.$setSubmitted();
+
+            if ($scope.item.form.$valid) {
+                $nutrition.desserts.save({dessert: $scope.dessert}, success);
+            }
+        };
+
+    })
+
     .controller('cBlank', function ($scope) {
 
     })
