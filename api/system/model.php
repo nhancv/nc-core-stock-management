@@ -72,7 +72,7 @@ class Model
     public function execute($qry)
     {
         $this->queryUtf8();
-        $exec = $this->connection->query($qry) or die($this->getConnectionError());
+        $exec = $this->connection->query($qry);
         return $exec;
     }
 

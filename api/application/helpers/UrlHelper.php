@@ -6,7 +6,7 @@
  * Date: 5/9/16
  * Time: 12:45 PM
  */
-class Url_helper
+class UrlHelper
 {
 
     function base_url()

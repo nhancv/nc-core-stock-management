@@ -8,7 +8,6 @@
  */
 class User extends Controller
 {
-
     function index()
     {
         $template = $this->loadView('main_view');
@@ -17,15 +16,80 @@ class User extends Controller
 
     function getUser()
     {
-        $json = $this->loadHelper('Json');
-        $userModel = $this->loadModel('Example_model');
-        $userList = $userModel->getAllUser();
-        $response["user"] = array();
-        foreach ($userList as &$user) {
-            array_push($response["user"], $user);
+        try {
+            $userModel = new UserModel();
+            $userList = $userModel->getAllUser();
+            $response["data"] = array();
+            foreach ($userList as &$user) {
+                array_push($response["data"], $user);
+            }
+            $response["status"] = 0;
+            echo Json::json_encode_utf8($response);
+        } catch (Exception $e) {
+            $response["status"] = 1;
+            $response["msg"] = $e;
+            echo Json::json_encode_utf8($response);
         }
-//        echo $json->json_encode_utf8($response);
-        $m_user = new MUser($userList[0]);
-        echo $m_user->getName();
+    }
+
+    function insertUser()
+    {
+        try {
+            $userModel = new UserModel();
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_POST))
+                $_POST = Json::json_decode_nice(file_get_contents('php://input'), true);
+            else throw new Exception ("check request method");
+            if (MBase::checkNull($_POST)) throw new Exception("object null");
+            $user = Parsing::parsingUser($_POST);
+            $res = $userModel->insertUser($user);
+            $response["msg"] = $res;
+            $response["status"] = 0;
+            echo Json::json_encode_utf8($response);
+        } catch (Exception $e) {
+            $response["status"] = 1;
+            $response["msg"] = $e->getMessage();
+            echo Json::json_encode_utf8($response);
+        }
+    }
+
+    function updateUser()
+    {
+        try {
+            $userModel = new UserModel();
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_POST))
+                $_POST = Json::json_decode_nice(file_get_contents('php://input'), true);
+            else throw new Exception ("check request method");
+            if (MBase::checkNull($_POST)) throw new Exception("object null");
+            $user = Parsing::parsingUser($_POST);
+            $user->setUpdateDate(date("Y-m-d H:i:s"));
+            $res = $userModel->updateUser($user);
+            $response["msg"] = $res;
+            $response["status"] = 0;
+            echo Json::json_encode_utf8($response);
+        } catch (Exception $e) {
+            $response["status"] = 1;
+            $response["msg"] = $e->getMessage();
+            echo Json::json_encode_utf8($response);
+        }
+    }
+
+    function deleteUser()
+    {
+        try {
+            $userModel = new UserModel();
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_POST))
+                $_POST = Json::json_decode_nice(file_get_contents('php://input'), true);
+            else throw new Exception ("check request method");
+            if (MBase::checkNull($_POST)) throw new Exception("object null");
+            $user = Parsing::parsingUser($_POST);
+            $res = $userModel->deleteUser($user->getUid());
+            $response["msg"] = $res;
+            $response["status"] = 0;
+            echo Json::json_encode_utf8($response);
+        } catch (Exception $e) {
+            $response["status"] = 1;
+            $response["msg"] = $e->getMessage();
+            echo Json::json_encode_utf8($response);
+        }
     }
 }

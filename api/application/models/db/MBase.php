@@ -27,15 +27,26 @@ class MBase
         $this->mapping($this->mapping_arr);
     }
 
-    protected function mapping($mapping_arr)
+    protected function mapping(&$mapping_arr)
     {
-
+        if (!isset($mapping_arr["uid"])) $mapping_arr["uid"] = UidGenerator::GeneratorUid();
+        if (!isset($mapping_arr["pid"])) $mapping_arr["pid"] = UidGenerator::GeneratorUidL(8);
+        if (!isset($mapping_arr["create_date"])) $mapping_arr["create_date"] = date("Y-m-d H:i:s");
+        if (!isset($mapping_arr["update_date"])) $mapping_arr["update_date"] = date("Y-m-d H:i:s");
+        if (!isset($mapping_arr["author"])) $mapping_arr["author"] = NULL;
         $this->uid = $mapping_arr["uid"];
         $this->pid = $mapping_arr["pid"];
         $this->create_date = $mapping_arr["create_date"];
         $this->update_date = $mapping_arr["update_date"];
         $this->author = $mapping_arr["author"];
 
+    }
+
+    public static function checkNull($array_obj)
+    {
+        if (!isset($array_obj["uid"])) return true;
+        if (!isset($array_obj["pid"])) return true;
+        return false;
     }
 
     /**
@@ -133,5 +144,4 @@ class MBase
     {
         $this->mapping_arr = $mapping_arr;
     }
-
 }

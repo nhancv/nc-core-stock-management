@@ -38,8 +38,6 @@ class Controller
     public function redirect($loc)
     {
         global $config;
-
         header('Location: ' . $config['base_url'] . $loc);
     }
-
 }

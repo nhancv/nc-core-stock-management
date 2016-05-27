@@ -52,12 +52,41 @@ angular.module('app.controllers', [])
                 });
         };
     })
-    .controller('cBody', function ($scope, $timeout, $mdSidenav, $mdDialog, $log) {
+    .controller('cBody', function ($scope, $timeout, $mdSidenav, $mdDialog, $log, sApiCall) {
 
     })
 
-    .controller('cUser', function ($rootScope, $scope, $mdDialog, $mdEditDialog, $q, $timeout, $log) {
+    .controller('cUser', function ($rootScope, $scope, $mdDialog, $mdEditDialog, $q, $timeout, $log, sApiCall) {
         'use strict';
+
+        sApiCall.getAllUser().then(function (results) {
+            console.log(results);
+        });
+
+        var newUser = {
+            "uid": "3",
+            "pid": "admin4",
+            "password": "1",
+            "name": "Nhan Cao",
+            "phone": null,
+            "address": null,
+            "type": "0",
+            "block": "0",
+            "create_date": "2016-05-10 00:45:46",
+            "update_date": "2016-05-10 00:45:46",
+            "author": "Nhan"
+        };
+
+        //sApiCall.insertUser(newUser).then(function (results) {
+        //    console.log(results);
+        //});
+        sApiCall.updateUser(newUser).then(function (results) {
+            console.log(results);
+        });
+        //sApiCall.deleteUser(newUser).then(function (results) {
+        //    console.log(results);
+        //});
+
         var tabs = [
                 {
                     title: 'Home',

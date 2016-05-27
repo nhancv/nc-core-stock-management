@@ -114,6 +114,12 @@ class MUser extends MBase
     protected function mapping($mapping_arr)
     {
         parent::mapping($mapping_arr);
+        if (!isset($mapping_arr["password"])) $mapping_arr["password"] = NULL;
+        if (!isset($mapping_arr["name"])) $mapping_arr["name"] = NULL;
+        if (!isset($mapping_arr["phone"])) $mapping_arr["phone"] = NULL;
+        if (!isset($mapping_arr["address"])) $mapping_arr["address"] = NULL;
+        if (!isset($mapping_arr["type"])) $mapping_arr["type"] = NULL;
+        if (!isset($mapping_arr["block"])) $mapping_arr["block"] = NULL;
         $this->password = $mapping_arr["password"];
         $this->name = $mapping_arr["name"];
         $this->phone = $mapping_arr["phone"];

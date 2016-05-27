@@ -6,7 +6,7 @@
  * Date: 5/9/16
  * Time: 12:45 PM
  */
-class Session_helper
+class SessionHelper
 {
 
     function set($key, $val)

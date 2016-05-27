@@ -6,13 +6,13 @@
  * Date: 5/10/16
  * Time: 12:38 AM
  */
-class Uid_generator
+class UidGenerator
 {
     /**Generate custom length unique id
      * @param int $length
      * @return mixed|string
      */
-    public function GeneratorUidL($length = 10)
+    public static function GeneratorUidL($length = 10)
     {
         //set the random id length
         $random_id_length = $length;
@@ -33,7 +33,7 @@ class Uid_generator
      * @return string
      * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX (8 letters)-(4 letters)-(4 letters)-(4 letters)-(12 letters)
      */
-    public function GeneratorUid()
+    public static function GeneratorUid()
     {
         $s = strtoupper(md5(uniqid(rand(), true)));
         $guidText =
