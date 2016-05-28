@@ -290,6 +290,8 @@ angular.module('app.controllers', [])
         this.cancel = $mdDialog.cancel;
         this.submit = function () {
             $scope.user.type = $scope.getTypes().indexOf($scope.typeSelected);
+            $scope.user.password = md5($scope.user.password);
+            console.log($scope.user.password);
             sApiCall.insertUser($scope.user).then(function (results) {
                 if (results.status == 0 && results.msg) {
                     sUtils.showSimpleToast("Create user successfully!");

@@ -120,7 +120,7 @@ class MUser extends MBase
         if (!isset($mapping_arr["address"])) $mapping_arr["address"] = NULL;
         if (!isset($mapping_arr["type"])) $mapping_arr["type"] = NULL;
         if (!isset($mapping_arr["block"])) $mapping_arr["block"] = NULL;
-        $this->password = md5($mapping_arr["password"]);
+        $this->password = $mapping_arr["password"];
         $this->name = $mapping_arr["name"];
         $this->phone = $mapping_arr["phone"];
         $this->address = $mapping_arr["address"];
