@@ -3,7 +3,7 @@
         <div class="md-toolbar-tools">
             <span>List</span>
             <div flex></div>
-            <md-button class="md-icon-button" ng-click="loadStuff()">
+            <md-button class="md-icon-button" ng-click="loadUserList()">
                 <md-icon>refresh</md-icon>
             </md-button>
             <md-button class="md-icon-button" ng-click="filter.show = true">
@@ -40,51 +40,49 @@
     </md-toolbar>
 
     <md-table-container>
-        <table md-table md-row-select="options.rowSelection" multiple="{{options.multiSelect}}" ng-model="selected"
+        <table ng-init="loadUserList()" md-table md-row-select="options.rowSelection" multiple="{{options.multiSelect}}"
+               ng-model="selected"
                md-progress="promise">
             <thead ng-if="!options.decapitate" md-head md-order="query.order" md-on-reorder="logOrder">
             <tr md-row>
-                <th md-column md-order-by="name"><span>user (100g serving)</span></th>
+                <th md-column><span>Edit</span></th>
+                <th md-column md-order-by="name"><span>Name</span></th>
+                <th md-column md-order-by="phone"><span>Phone</span></th>
+                <th md-column md-order-by="address"><span>Address</span></th>
                 <th md-column md-order-by="type"><span>Type</span></th>
-                <th md-column md-numeric md-order-by="calories.value" md-desc><span>Calories</span></th>
-                <th md-column md-numeric md-order-by="fat.value"><span>Fat (g)</span></th>
-                <th md-column md-numeric md-order-by="carbs.value"><span>Carbs (g)</span></th>
-                <th md-column md-numeric md-order-by="protein.value"><span>Protein (g)</span></th>
-                <th md-column md-numeric md-order-by="sodium.value" hide-gt-xs show-gt-md><span>Sodium (mg)</span></th>
-                <th md-column md-numeric md-order-by="calcium.value" hide-gt-xs show-gt-lg><span>Calcium (%)</span></th>
-                <th md-column md-numeric md-order-by="iron.value" hide-gt-xs show-gt-lg><span>Iron (%)</span></th>
-                <th md-column md-order-by="comment">
-                    <md-icon>comments</md-icon>
-                    <span>Comments</span>
-                </th>
+                <th md-column md-order-by="block"><span>Block</span></th>
+                <th md-column md-order-by="create_date" hide-gt-xs show-gt-md><span>Create date</span></th>
+                <th md-column md-order-by="update_date" hide-gt-xs show-gt-md><span>Update date</span></th>
+                <th md-column md-order-by="author" hide-gt-xs show-gt-md><span>Author</span></th>
             </tr>
             </thead>
             <tbody md-body>
             <tr md-row md-select="user" md-on-select="logItem" md-auto-select="options.autoSelect"
-                ng-disabled="user.calories.value > 400"
-                ng-repeat="user in users.data | filter: query.filter | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
+                ng-repeat="user in users.data | filter: query.filter | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit"
+                ng-disabled="user.uid==1">
+                <td md-cell ng-click="delete($event)">
+                    <md-button
+                            title="Edit user"
+                            ng-disabled="false"
+                            aria-label="Edit user"
+                            class="md-icon-button launch">
+                        <md-icon>mode_edit</md-icon>
+                    </md-button>
+                </td>
                 <td md-cell>{{user.name}}</td>
-                <td md-cell>
-                    <md-select ng-model="user.type" placeholder="Other">
-                        <md-option ng-value="type" ng-repeat="type in getTypes()">{{type}}</md-option>
-                    </md-select>
-                </td>
-                <td md-cell>{{user.calories.value}}</td>
-                <td md-cell>{{user.fat.value | number: 2}}</td>
-                <td md-cell>{{user.carbs.value}}</td>
-                <td md-cell>{{user.protein.value | number: 2}}</td>
-                <td md-cell hide-gt-xs show-gt-md>{{user.sodium.value}}</td>
-                <td md-cell hide-gt-xs show-gt-lg>{{user.calcium.value}}%</td>
-                <td md-cell hide-gt-xs show-gt-lg>{{user.iron.value}}%</td>
-                <td md-cell ng-click="editComment($event, user)" ng-class="{'md-placeholder': !user.comment}">
-                    {{user.comment || 'Add a comment'}}
-                </td>
+                <td md-cell>{{user.phone}}</td>
+                <td md-cell>{{user.address}}</td>
+                <td md-cell>{{getTypes()[user.type]}}</td>
+                <td md-cell>{{getBlocks()[user.block]}}</td>
+                <td md-cell hide-gt-xs show-gt-md>{{user.create_date}}</td>
+                <td md-cell hide-gt-xs show-gt-md>{{user.update_date}}</td>
+                <td md-cell hide-gt-xs show-gt-md>{{user.author}}</td>
             </tr>
             </tbody>
         </table>
     </md-table-container>
 
     <md-table-pagination md-limit="query.limit" md-limit-options="limitOptions" md-page="query.page"
-                         md-total="{{users.count}}" md-page-select="options.pageSelect"
+                         md-total="{{users.data.length}}" md-page-select="options.pageSelect"
                          md-boundary-links="options.boundaryLinks" md-on-paginate="logPagination"></md-table-pagination>
 </md-card>
