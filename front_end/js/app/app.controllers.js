@@ -90,17 +90,17 @@ angular.module('app.controllers', [])
         var tabs = [
                 {
                     title: 'Home',
-                    content: "<h1>Test</h1>Tabs will become paginated if there isn't enough room for them.",
+                    content: "<h3>All Users</h3>List all users, you can delete, edit and add new user",
                     template: "front_end/partials/p_user_tab_home.html"
                 },
                 {
                     title: 'Add',
-                    content: "You can swipe left and right on a mobile device to change tabs.",
+                    content: "<h3>Reprehenderit</h3>Reprehenderit ex, feugiat, mollit ultrices. Semper in illum parturient, purus laboris imperdiet quae rerum rem senectus aspernatur hymenaeos viverra integer.",
                     template: "front_end/partials/404.html"
                 },
                 {
                     title: 'Setting',
-                    content: "You can bind the selected tab via the selected attribute on the md-tabs element.",
+                    content: "<h3>Maecenas</h3>Maecenas optio cursus laboris, ex felis et faucibus perferendis officiis? Platea pulvinar ridiculus exercitation! Quibusdam! Montes, semper blanditiis corporis blandit.",
                     template: "front_end/partials/404.html"
                 }
             ],
@@ -114,21 +114,13 @@ angular.module('app.controllers', [])
             if (old + 1 && (old != current)) $log.debug('Goodbye ' + previous.title + '!');
             if (current + 1)                $log.debug('Hello ' + selected.title + '!');
         });
-        $scope.addTab = function (title, view) {
-            view = view || title + " Content View";
-            tabs.push({title: title, content: view, disabled: false});
-        };
-        $scope.removeTab = function (tab) {
-            var index = tabs.indexOf(tab);
-            tabs.splice(index, 1);
-        };
 
         //    table
         $scope.selected = [];
         $scope.limitOptions = [5, 10, 15, {
             label: 'All',
             value: function () {
-                return $scope.desserts ? $scope.desserts.count : 0;
+                return $scope.users ? $scope.users.count : 0;
             }
         }];
 
@@ -165,7 +157,7 @@ angular.module('app.controllers', [])
                 focusOnOpen: false,
                 targetEvent: event,
                 templateUrl: 'front_end/partials/add-item-dialog.html',
-            }).then($scope.desserts);
+            }).then($scope.users);
         };
 
         $scope.delete = function (event) {
@@ -175,11 +167,11 @@ angular.module('app.controllers', [])
                 controllerAs: 'ctrl',
                 focusOnOpen: false,
                 targetEvent: event,
-                locals: {desserts: $scope.selected},
+                locals: {users: $scope.selected},
                 templateUrl: 'front_end/partials/delete-dialog.html',
-            }).then($scope.desserts);
+            }).then($scope.users);
         };
-        $scope.desserts = {
+        $scope.users = {
             "count": 9,
             "data": [
                 {
@@ -330,7 +322,11 @@ angular.module('app.controllers', [])
         };
 
         $scope.getTypes = function () {
-            return ['Candy', 'Ice cream', 'Other', 'Pastry'];
+            return ['Owner', 'Assistant', 'Partner', 'Shipper'];
+        };
+
+        $scope.getBlocks = function () {
+            return ['Normal', 'Block', 'Wait accept'];
         };
 
         $scope.loadStuff = function () {
@@ -353,16 +349,16 @@ angular.module('app.controllers', [])
         }
 
     })
-    .controller('deleteController', function (desserts, $mdDialog, $scope, $q) {
+    .controller('deleteController', function (users, $mdDialog, $scope, $q) {
         'use strict';
 
         this.cancel = $mdDialog.cancel;
 
         function deleteDessert(dessert, index) {
-            var deferred = $nutrition.desserts.remove({id: dessert._id});
+            var deferred = $nutrition.users.remove({id: dessert._id});
 
             deferred.$promise.then(function () {
-                desserts.splice(index, 1);
+                users.splice(index, 1);
             });
 
             return deferred.$promise;
@@ -377,7 +373,7 @@ angular.module('app.controllers', [])
         }
 
         function success() {
-            $q.all(desserts.forEach(deleteDessert)).then(onComplete);
+            $q.all(users.forEach(deleteDessert)).then(onComplete);
         }
 
         this.authorizeUser = function () {
@@ -398,7 +394,7 @@ angular.module('app.controllers', [])
             $scope.item.form.$setSubmitted();
 
             if ($scope.item.form.$valid) {
-                $nutrition.desserts.save({dessert: $scope.dessert}, success);
+                $nutrition.users.save({dessert: $scope.dessert}, success);
             }
         };
 
