@@ -79,6 +79,11 @@ angular.module('app.services', [])
             return httpPromise("POST", mBase.host + "/api/user/deleteUser", false, form_data);
         };
 
+        this.deleteMultiUser = function (uid_arr) {
+            var form_data = uid_arr;
+            return httpPromise("POST", mBase.host + "/api/user/deleteMultiUser", false, form_data);
+        };
+
         var httpPromise = function (method, url, ignoreLoadingBar, data) {
             if (ignoreLoadingBar === undefined) ignoreLoadingBar = true;
             var defer = $q.defer();

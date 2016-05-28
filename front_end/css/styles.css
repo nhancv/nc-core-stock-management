@@ -114,9 +114,8 @@ md-dialog > .md-actions > .md-button {
   min-width: 60px;
 }
 md-dialog[edit-dialog] {
-  max-width: 400px;
+  max-width: 500px;
 }
-
 md-dialog[add-item-dialog] {
   min-width: 500px;
 }

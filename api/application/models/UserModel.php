@@ -87,4 +87,16 @@ class UserModel extends Model
         $result = $this->execute($sql);
         return $result;
     }
+
+    public function deleteMultiUser($uid_arr)
+    {
+        $uid_arr = $this->escapeArray($uid_arr);
+        $sql = 'DELETE FROM `User` WHERE ';
+        for ($x = 0; $x < count($uid_arr); $x++) {
+            $sql = $sql . ' `uid`="' . $uid_arr[$x] . '" ';
+            if ($x < count($uid_arr) - 1) $sql = $sql . ' OR ';
+        }
+        $result = $this->execute($sql);
+        return $result;
+    }
 }

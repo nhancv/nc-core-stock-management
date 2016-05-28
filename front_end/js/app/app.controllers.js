@@ -64,33 +64,9 @@ angular.module('app.controllers', [])
 
     })
 
-    .controller('cUser', function ($rootScope, $scope, $mdDialog, $mdEditDialog, $q, $timeout, $log, sApiCall) {
+    .controller('cUser', function ($rootScope, $scope, $mdDialog, $mdEditDialog, $q, $timeout, $log, sApiCall, sUtils) {
         'use strict';
 
-
-        var newUser = {
-            "uid": "3",
-            "pid": "admin4",
-            "password": "1",
-            "name": "Nhan Cao",
-            "phone": null,
-            "address": null,
-            "type": "0",
-            "block": "0",
-            "create_date": "2016-05-10 00:45:46",
-            "update_date": "2016-05-10 00:45:46",
-            "author": "Nhan"
-        };
-
-        //sApiCall.insertUser(newUser).then(function (results) {
-        //    console.log(results);
-        //});
-        //sApiCall.updateUser(newUser).then(function (results) {
-        //    console.log(results);
-        //});
-        //sApiCall.deleteUser(newUser).then(function (results) {
-        //    console.log(results);
-        //});
 
         var tabs = [
                 {
@@ -177,11 +153,31 @@ angular.module('app.controllers', [])
             $mdDialog.show(confirm).then(function () {
                 console.log('Cancel');
             }, function () {
-                console.log('OK');
+                var form_data = {
+                    uid_arr: []
+                };
+                angular.forEach($scope.selected, function (value, key) {
+                    form_data.uid_arr.push(value.uid);
+                });
+                sApiCall.deleteMultiUser(form_data).then(function (results) {
+                    if (results.status == 0 && results.msg) {
+                        sUtils.showSimpleToast("Create user successfully!");
+                        $scope.selected = [];
+                        $timeout(function () {
+                            $mdDialog.hide();
+                            $rootScope.loadUserList();
+                        }, 100);
+                    } else {
+                        sUtils.showSimpleToast("Have errors occur when create this user");
+                    }
+                });
+
+
+
             });
         };
 
-        $scope.editUser = function (event) {
+        $scope.editUser = function (event, user) {
             event.stopPropagation(); // in case autoselect is enabled
             $mdDialog.show({
                 clickOutsideToClose: true,
@@ -189,9 +185,9 @@ angular.module('app.controllers', [])
                 controllerAs: 'ctrl',
                 focusOnOpen: false,
                 targetEvent: event,
-                locals: {users: $scope.selected},
+                locals: {user: user},
                 templateUrl: 'front_end/partials/dialog/user_edit.html'
-            }).then($scope.users);
+            });
         };
         $scope.users = {};
 
@@ -269,12 +265,31 @@ angular.module('app.controllers', [])
         }
 
     })
-    .controller('cUserEdit', function ($mdDialog, $scope) {
+    .controller('cUserEdit', function (user, $mdDialog, $rootScope, $scope, $timeout, sApiCall, sUtils, mBase) {
         'use strict';
+        $scope.user = angular.copy(user);
+        $scope.typeSelected = mBase.type[$scope.user.type];
+        $scope.getTypes = function () {
+            return mBase.type;
+        };
 
         this.cancel = $mdDialog.cancel;
         this.submit = function () {
-            console.log("Edit user");
+            $scope.user.type = $scope.getTypes().indexOf($scope.typeSelected);
+            if ($scope.user.password != user.password) {
+                $scope.user.password = md5($scope.user.password);
+            }
+            sApiCall.updateUser($scope.user).then(function (results) {
+                if (results.status == 0 && results.msg) {
+                    sUtils.showSimpleToast("Update user successfully!");
+                    $timeout(function () {
+                        $mdDialog.hide();
+                        $rootScope.loadUserList();
+                    }, 100);
+                } else {
+                    sUtils.showSimpleToast("Have errors occur when update this user");
+                }
+            });
         }
 
     })
@@ -291,7 +306,6 @@ angular.module('app.controllers', [])
         this.submit = function () {
             $scope.user.type = $scope.getTypes().indexOf($scope.typeSelected);
             $scope.user.password = md5($scope.user.password);
-            console.log($scope.user.password);
             sApiCall.insertUser($scope.user).then(function (results) {
                 if (results.status == 0 && results.msg) {
                     sUtils.showSimpleToast("Create user successfully!");
@@ -303,8 +317,6 @@ angular.module('app.controllers', [])
                     sUtils.showSimpleToast("Have errors occur when create this user");
                 }
             });
-
-
         }
     })
 
