@@ -2,7 +2,17 @@
  * Created by nhancao on 5/18/16.
  */
 angular.module('app.services', [])
-    .service('sUtils', function ($indexedDB, localStorageService, mBase) {
+    .service('sUtils', function ($indexedDB, $mdToast, localStorageService, mBase) {
+
+        this.showSimpleToast = function (msg) {
+            $mdToast.show(
+                $mdToast.simple()
+                    .textContent(msg)
+                    .position('top right')
+                    .hideDelay(3000)
+            );
+        };
+
 
         this.isLocalEmpty = function () {
             if (!this.isValue(this.getLocal().get(mBase.KEYSTORAGE.EXPIRETIME))) return true;

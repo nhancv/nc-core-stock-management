@@ -49,6 +49,12 @@ class MBase
         return false;
     }
 
+    public static function checkNullField($field)
+    {
+        if (!isset($field)) return true;
+        return false;
+    }
+
     /**
      * @return mixed
      */

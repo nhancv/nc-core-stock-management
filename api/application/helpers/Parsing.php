@@ -24,8 +24,20 @@ class Parsing
     "author": "Nhan Cao"
 }
      */
-    public static function parsingUser($jsonData)
+    public static function parsingNewUser($jsonData)
+    {
+        return Parsing::parsingUser($jsonData);
+    }
+
+    private static function parsingUser($jsonData)
     {
         return new MUser($jsonData);
+    }
+
+    public static function parsingEditUser($jsonData)
+    {
+        $user = new MUser($jsonData);
+        $user->setUpdateDate(date("Y-m-d H:i:s"));
+        return $user;
     }
 }

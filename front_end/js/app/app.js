@@ -6,6 +6,7 @@ angular.module('app', [
         'ngAnimate',
         'ngSanitize',
         'ngMaterial',
+        'ngMessages',
         'ui.router',
         'angular-loading-bar',
         'indexedDB',

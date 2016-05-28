@@ -59,7 +59,7 @@
             <tbody md-body>
             <tr md-row md-select="user" md-on-select="logItem" md-auto-select="options.autoSelect"
                 ng-repeat="user in users.data | filter: query.filter | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit"
-                ng-disabled="user.uid==1">
+                ng-disabled="user.pid=='admin'">
                 <td md-cell ng-click="editUser($event)">
                     <md-button
                             title="Edit user"

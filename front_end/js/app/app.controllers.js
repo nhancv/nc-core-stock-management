@@ -2,7 +2,15 @@
  * Created by nhancao on 5/18/16.
  */
 angular.module('app.controllers', [])
-    .controller('cHome', function ($scope, $timeout, $mdSidenav, $log) {
+    .controller('cHome', function ($rootScope, $scope, $timeout, $mdSidenav, $log, mBase) {
+        $rootScope.getTypes = function () {
+            return mBase.type;
+        };
+
+        $rootScope.getBlocks = function () {
+            return ['Normal', 'Block', 'Wait accept'];
+        };
+
         $scope.toggleLeft = buildDelayedToggler('leftMenu');
 
         /**
@@ -141,7 +149,7 @@ angular.module('app.controllers', [])
         };
         $scope.query = {
             filter: '',
-            order: 'nameToLower',
+            order: '- create_date',
             limit: 5,
             page: 1
         };
@@ -149,7 +157,7 @@ angular.module('app.controllers', [])
         $scope.addUser = function (event) {
             event.stopPropagation(); // in case autoselect is enabled
             $mdDialog.show({
-                clickOutsideToClose: true,
+                clickOutsideToClose: false,
                 controller: 'cUserAdd',
                 controllerAs: 'ctrl',
                 focusOnOpen: false,
@@ -164,7 +172,8 @@ angular.module('app.controllers', [])
                 .textContent('Think carefully!')
                 .targetEvent(ev)
                 .ok('Cancel')
-                .cancel('Ok');
+                .cancel('Ok')
+                .clickOutsideToClose(false);
             $mdDialog.show(confirm).then(function () {
                 console.log('Cancel');
             }, function () {
@@ -239,15 +248,7 @@ angular.module('app.controllers', [])
             $scope.limitOptions = $scope.limitOptions ? undefined : [5, 10, 15];
         };
 
-        $scope.getTypes = function () {
-            return ['Owner', 'Assistant', 'Partner', 'Shipper'];
-        };
-
-        $scope.getBlocks = function () {
-            return ['Normal', 'Block', 'Wait accept'];
-        };
-
-        $scope.loadUserList = function () {
+        $rootScope.loadUserList = function () {
             $scope.promise =
                 sApiCall.getAllUser().then(function (results) {
                     $scope.users = results;
@@ -272,19 +273,36 @@ angular.module('app.controllers', [])
         'use strict';
 
         this.cancel = $mdDialog.cancel;
-
         this.submit = function () {
             console.log("Edit user");
         }
 
     })
-    .controller('cUserAdd', function ($mdDialog, $scope) {
+    .controller('cUserAdd', function ($mdDialog, $rootScope, $scope, $timeout, sApiCall, sUtils, mBase) {
         'use strict';
 
-        this.cancel = $mdDialog.cancel;
+        $scope.user = angular.copy(mBase.user);
+        $scope.typeSelected = mBase.type[$scope.user.type];
+        $scope.getTypes = function () {
+            return mBase.type;
+        };
 
+        this.cancel = $mdDialog.cancel;
         this.submit = function () {
-            console.log("Edit user");
+            $scope.user.type = $scope.getTypes().indexOf($scope.typeSelected);
+            sApiCall.insertUser($scope.user).then(function (results) {
+                if (results.status == 0 && results.msg) {
+                    sUtils.showSimpleToast("Create user successfully!");
+                    $timeout(function () {
+                        $mdDialog.hide();
+                        $rootScope.loadUserList();
+                    }, 100);
+                } else {
+                    sUtils.showSimpleToast("Have errors occur when create this user");
+                }
+            });
+
+
         }
     })
 

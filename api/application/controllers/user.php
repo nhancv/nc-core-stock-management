@@ -39,8 +39,8 @@ class User extends Controller
             if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_POST))
                 $_POST = Json::json_decode_nice(file_get_contents('php://input'), true);
             else throw new Exception ("check request method");
-            if (MBase::checkNull($_POST)) throw new Exception("object null");
-            $user = Parsing::parsingUser($_POST);
+            if (MBase::checkNullField($_POST["pid"])) throw new Exception("object null");
+            $user = Parsing::parsingNewUser($_POST);
             $res = $userModel->insertUser($user);
             $response["msg"] = $res;
             $response["status"] = 0;
@@ -60,8 +60,7 @@ class User extends Controller
                 $_POST = Json::json_decode_nice(file_get_contents('php://input'), true);
             else throw new Exception ("check request method");
             if (MBase::checkNull($_POST)) throw new Exception("object null");
-            $user = Parsing::parsingUser($_POST);
-            $user->setUpdateDate(date("Y-m-d H:i:s"));
+            $user = Parsing::parsingEditUser($_POST);
             $res = $userModel->updateUser($user);
             $response["msg"] = $res;
             $response["status"] = 0;
@@ -81,7 +80,7 @@ class User extends Controller
                 $_POST = Json::json_decode_nice(file_get_contents('php://input'), true);
             else throw new Exception ("check request method");
             if (MBase::checkNull($_POST)) throw new Exception("object null");
-            $user = Parsing::parsingUser($_POST);
+            $user = Parsing::parsingNewUser($_POST);
             $res = $userModel->deleteUser($user->getUid());
             $response["msg"] = $res;
             $response["status"] = 0;
