@@ -6,7 +6,7 @@
  * Date: 5/9/16
  * Time: 12:48 PM
  */
-class Json
+class Jsonx
 {
     public static function json_encode_utf8($struct)
     {

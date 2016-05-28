@@ -24,11 +24,11 @@ class User extends Controller
                 array_push($response["data"], $user);
             }
             $response["status"] = 0;
-            echo Json::json_encode_utf8($response);
+            echo Jsonx::json_encode_utf8($response);
         } catch (Exception $e) {
             $response["status"] = 1;
             $response["msg"] = $e;
-            echo Json::json_encode_utf8($response);
+            echo Jsonx::json_encode_utf8($response);
         }
     }
 
@@ -37,18 +37,18 @@ class User extends Controller
         try {
             $userModel = new UserModel();
             if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_POST))
-                $_POST = Json::json_decode_nice(file_get_contents('php://input'), true);
+                $_POST = Jsonx::json_decode_nice(file_get_contents('php://input'), true);
             else throw new Exception ("check request method");
             if (MBase::checkNullField($_POST["pid"])) throw new Exception("object null");
             $user = Parsing::parsingNewUser($_POST);
             $res = $userModel->insertUser($user);
             $response["msg"] = $res;
             $response["status"] = 0;
-            echo Json::json_encode_utf8($response);
+            echo Jsonx::json_encode_utf8($response);
         } catch (Exception $e) {
             $response["status"] = 1;
             $response["msg"] = $e->getMessage();
-            echo Json::json_encode_utf8($response);
+            echo Jsonx::json_encode_utf8($response);
         }
     }
 
@@ -57,18 +57,18 @@ class User extends Controller
         try {
             $userModel = new UserModel();
             if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_POST))
-                $_POST = Json::json_decode_nice(file_get_contents('php://input'), true);
+                $_POST = Jsonx::json_decode_nice(file_get_contents('php://input'), true);
             else throw new Exception ("check request method");
             if (MBase::checkNull($_POST)) throw new Exception("object null");
             $user = Parsing::parsingEditUser($_POST);
             $res = $userModel->updateUser($user);
             $response["msg"] = $res;
             $response["status"] = 0;
-            echo Json::json_encode_utf8($response);
+            echo Jsonx::json_encode_utf8($response);
         } catch (Exception $e) {
             $response["status"] = 1;
             $response["msg"] = $e->getMessage();
-            echo Json::json_encode_utf8($response);
+            echo Jsonx::json_encode_utf8($response);
         }
     }
 
@@ -77,18 +77,18 @@ class User extends Controller
         try {
             $userModel = new UserModel();
             if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_POST))
-                $_POST = Json::json_decode_nice(file_get_contents('php://input'), true);
+                $_POST = Jsonx::json_decode_nice(file_get_contents('php://input'), true);
             else throw new Exception ("check request method");
             if (MBase::checkNull($_POST)) throw new Exception("object null");
             $user = Parsing::parsingNewUser($_POST);
             $res = $userModel->deleteUser($user->getUid());
             $response["msg"] = $res;
             $response["status"] = 0;
-            echo Json::json_encode_utf8($response);
+            echo Jsonx::json_encode_utf8($response);
         } catch (Exception $e) {
             $response["status"] = 1;
             $response["msg"] = $e->getMessage();
-            echo Json::json_encode_utf8($response);
+            echo Jsonx::json_encode_utf8($response);
         }
     }
 
@@ -97,17 +97,17 @@ class User extends Controller
         try {
             $userModel = new UserModel();
             if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_POST))
-                $_POST = Json::json_decode_nice(file_get_contents('php://input'), true);
+                $_POST = Jsonx::json_decode_nice(file_get_contents('php://input'), true);
             else throw new Exception ("check request method");
             if (MBase::checkNullField($_POST["uid_arr"])) throw new Exception("object null");
             $res = $userModel->deleteMultiUser($_POST["uid_arr"]);
             $response["msg"] = $res;
             $response["status"] = 0;
-            echo Json::json_encode_utf8($response);
+            echo Jsonx::json_encode_utf8($response);
         } catch (Exception $e) {
             $response["status"] = 1;
             $response["msg"] = $e->getMessage();
-            echo Json::json_encode_utf8($response);
+            echo Jsonx::json_encode_utf8($response);
         }
     }
 
