@@ -113,7 +113,8 @@ md-dialog > md-dialog-content > form:last-child > md-input-container:last-child 
 md-dialog > .md-actions > .md-button {
   min-width: 60px;
 }
-md-dialog[delete-dialog] {
+
+md-dialog[edit-dialog] {
   max-width: 300px;
 }
 md-dialog[add-item-dialog] > md-dialog-content > form > .input-row {

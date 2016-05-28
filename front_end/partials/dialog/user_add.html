@@ -8,7 +8,7 @@
             <span>&nbsp; All fields are required.</span>
         </p>
 
-        <form name="item.form" ng-submit="ctrl.addItem()">
+        <form name="item.form" ng-submit="ctrl.submit()">
             <div layout="row" class="input-row">
                 <md-input-container flex>
                     <label>Name</label>
@@ -53,9 +53,9 @@
 
     </md-dialog-content>
 
-    <div class="md-actions">
-        <md-button class="md-primary" ng-click="ctrl.addItem()" ng-disabled="item.form.$invalid">Add Item</md-button>
+    <md-dialog-actions layout="row">
+        <md-button class="md-primary" ng-click="ctrl.submit()" ng-disabled="item.form.$invalid">Add Item</md-button>
         <md-button class="md-primary" ng-click="ctrl.cancel()">Cancel</md-button>
-    </div>
+    </md-dialog-actions>
 
 </md-dialog>

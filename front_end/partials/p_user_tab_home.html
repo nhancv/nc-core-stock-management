@@ -9,7 +9,7 @@
             <md-button class="md-icon-button" ng-click="filter.show = true">
                 <md-icon>filter_list</md-icon>
             </md-button>
-            <md-button class="md-icon-button" ng-click="addItem($event)">
+            <md-button class="md-icon-button" ng-click="addUser($event)">
                 <md-icon>account_circle</md-icon>
             </md-button>
             <md-button class="md-icon-button">
@@ -33,7 +33,7 @@
         <div class="md-toolbar-tools">
             <span>{{selected.length}} {{selected.length > 1 ? 'items' : 'item'}} selected</span>
             <span flex></span>
-            <md-button class="md-icon-button" ng-click="delete($event)">
+            <md-button class="md-icon-button" ng-click="deleteUser($event)">
                 <md-icon>delete</md-icon>
             </md-button>
         </div>
@@ -60,7 +60,7 @@
             <tr md-row md-select="user" md-on-select="logItem" md-auto-select="options.autoSelect"
                 ng-repeat="user in users.data | filter: query.filter | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit"
                 ng-disabled="user.uid==1">
-                <td md-cell ng-click="delete($event)">
+                <td md-cell ng-click="editUser($event)">
                     <md-button
                             title="Edit user"
                             ng-disabled="false"

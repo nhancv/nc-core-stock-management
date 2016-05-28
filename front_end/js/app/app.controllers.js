@@ -121,7 +121,6 @@ angular.module('app.controllers', [])
             }
         }];
 
-
         $scope.options = {
             rowSelection: true,
             multiSelect: true,
@@ -146,26 +145,43 @@ angular.module('app.controllers', [])
             limit: 5,
             page: 1
         };
-        $scope.addItem = function (event) {
+
+        $scope.addUser = function (event) {
+            event.stopPropagation(); // in case autoselect is enabled
             $mdDialog.show({
                 clickOutsideToClose: true,
-                controller: 'addItemController',
+                controller: 'cUserAdd',
                 controllerAs: 'ctrl',
                 focusOnOpen: false,
                 targetEvent: event,
-                templateUrl: 'front_end/partials/add-item-dialog.html',
+                templateUrl: 'front_end/partials/dialog/user_add.html'
             }).then($scope.users);
         };
 
-        $scope.delete = function (event) {
+        $scope.deleteUser = function (ev) {
+            var confirm = $mdDialog.confirm()
+                .title('Would you like to delete this user?')
+                .textContent('Think carefully!')
+                .targetEvent(ev)
+                .ok('Cancel')
+                .cancel('Ok');
+            $mdDialog.show(confirm).then(function () {
+                console.log('Cancel');
+            }, function () {
+                console.log('OK');
+            });
+        };
+
+        $scope.editUser = function (event) {
+            event.stopPropagation(); // in case autoselect is enabled
             $mdDialog.show({
                 clickOutsideToClose: true,
-                controller: 'deleteController',
+                controller: 'cUserEdit',
                 controllerAs: 'ctrl',
                 focusOnOpen: false,
                 targetEvent: event,
                 locals: {users: $scope.selected},
-                templateUrl: 'front_end/partials/delete-dialog.html',
+                templateUrl: 'front_end/partials/dialog/user_edit.html'
             }).then($scope.users);
         };
         $scope.users = {};
@@ -235,7 +251,6 @@ angular.module('app.controllers', [])
             $scope.promise =
                 sApiCall.getAllUser().then(function (results) {
                     $scope.users = results;
-                    console.log($scope.users);
                 });
         };
 
@@ -253,55 +268,24 @@ angular.module('app.controllers', [])
         }
 
     })
-    .controller('deleteController', function (users, $mdDialog, $scope, $q) {
+    .controller('cUserEdit', function ($mdDialog, $scope) {
         'use strict';
 
         this.cancel = $mdDialog.cancel;
 
-        function deleteDessert(dessert, index) {
-            var deferred = $nutrition.users.remove({id: dessert._id});
-
-            deferred.$promise.then(function () {
-                users.splice(index, 1);
-            });
-
-            return deferred.$promise;
+        this.submit = function () {
+            console.log("Edit user");
         }
-
-        function onComplete() {
-            $mdDialog.hide();
-        }
-
-        function error() {
-            $scope.error = 'Invalid secret.';
-        }
-
-        function success() {
-            $q.all(users.forEach(deleteDessert)).then(onComplete);
-        }
-
-        this.authorizeUser = function () {
-            $authorize.get({secret: $scope.authorize.secret}, success, error);
-        };
 
     })
-    .controller('addItemController', function ($mdDialog, $scope) {
+    .controller('cUserAdd', function ($mdDialog, $scope) {
         'use strict';
 
         this.cancel = $mdDialog.cancel;
 
-        function success(dessert) {
-            $mdDialog.hide(dessert);
+        this.submit = function () {
+            console.log("Edit user");
         }
-
-        this.addItem = function () {
-            $scope.item.form.$setSubmitted();
-
-            if ($scope.item.form.$valid) {
-                $nutrition.users.save({dessert: $scope.dessert}, success);
-            }
-        };
-
     })
 
     .controller('cBlank', function ($scope) {
