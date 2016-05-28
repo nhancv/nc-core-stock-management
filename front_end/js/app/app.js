@@ -43,6 +43,11 @@ angular.module('app', [
         $mdThemingProvider.theme('default')
             .primaryPalette('blue');
     }])
+    .config(function ($mdDateLocaleProvider) {
+        $mdDateLocaleProvider.formatDate = function (date) {
+            return moment(date).format('YYYY-MM-DD');
+        };
+    })
     .run(function ($rootScope, mBase) {
         $rootScope.$on(mBase.MSG.SUCCESS, function () {
             console.log("broadcast success");

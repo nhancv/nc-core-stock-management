@@ -27,6 +27,7 @@ angular.module('app.models', [])
         },
 
         type: ['Owner', 'Assistant', 'Partner', 'Shipper'],
+        block: ['Normal', 'Block', 'Wait accept'],
         user: {
             "uid": null,
             "pid": null,

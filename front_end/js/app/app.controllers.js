@@ -8,7 +8,7 @@ angular.module('app.controllers', [])
         };
 
         $rootScope.getBlocks = function () {
-            return ['Normal', 'Block', 'Wait accept'];
+            return mBase.block;
         };
 
         $scope.toggleLeft = buildDelayedToggler('leftMenu');
@@ -64,10 +64,10 @@ angular.module('app.controllers', [])
 
     })
 
-    .controller('cUser', function ($rootScope, $scope, $mdDialog, $mdEditDialog, $q, $timeout, $log, sApiCall, sUtils) {
+    .controller('cUser', function ($rootScope, $scope, $mdDialog, $mdEditDialog, $q, $timeout, $log, sApiCall, sUtils, mBase) {
         'use strict';
 
-
+        $scope.filterDetails = {};
         var tabs = [
                 {
                     title: 'Home',
@@ -130,6 +130,42 @@ angular.module('app.controllers', [])
             page: 1
         };
 
+        $scope.filterDate = {
+            createDate: '',
+            updateDate: ''
+        };
+        $scope.filterSelect = {
+            type: '',
+            block: ''
+        };
+        $scope.$watch('filterSelect.type', function (value) {
+            if (sUtils.isValue(value) && value.length > 0) {
+                $scope.filterDetails.type = mBase.type.indexOf(value);
+            }
+        });
+        $scope.$watch('filterSelect.block', function (value) {
+            if (sUtils.isValue(value) && value.length > 0) {
+                $scope.filterDetails.block = mBase.block.indexOf(value);
+            }
+        });
+        $scope.$watch('filterDate.createDate', function (value) {
+            if (sUtils.isValue(value)) {
+                $scope.filterDetails.create_date = moment(value).format('YYYY-MM-DD');
+            }
+        });
+        $scope.$watch('filterDate.updateDate', function (value) {
+            if (sUtils.isValue(value)) {
+                $scope.filterDetails.update_date = moment(value).format('YYYY-MM-DD');
+            }
+        });
+
+        $scope.showFilterDetails = function () {
+            $scope.filterDetail = !$scope.filterDetail;
+            $scope.filterDetails = {};
+            $scope.filterSelect = {};
+            $scope.filterDate = {};
+        };
+
         $scope.addUser = function (event) {
             event.stopPropagation(); // in case autoselect is enabled
             $mdDialog.show({
@@ -171,7 +207,6 @@ angular.module('app.controllers', [])
                         sUtils.showSimpleToast("Have errors occur when create this user");
                     }
                 });
-
 
 
             });

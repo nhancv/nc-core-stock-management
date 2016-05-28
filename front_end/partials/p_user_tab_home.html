@@ -12,7 +12,7 @@
             <md-button class="md-icon-button" ng-click="addUser($event)">
                 <md-icon>account_circle</md-icon>
             </md-button>
-            <md-button class="md-icon-button">
+            <md-button class="md-icon-button" ng-click="showFilterDetails()">
                 <md-icon>more_vert</md-icon>
             </md-button>
         </div>
@@ -57,8 +57,41 @@
             </tr>
             </thead>
             <tbody md-body>
+            <tr md-row class="md-row-filter" ng-if="filterDetail">
+                <td md-cell></td>
+                <td md-cell>
+                    <input flex ng-model="filterDetails.name" style="width: 90px;">
+                </td>
+                <td md-cell>
+                    <input flex ng-model="filterDetails.phone" style="width: 90px;">
+                </td>
+                <td md-cell>
+                    <input flex ng-model="filterDetails.address" style="width: 90px;">
+                </td>
+                <td md-cell>
+                    <md-select ng-model="filterSelect.type" placeholder="Type" style="width: 40px;">
+                        <md-option ng-repeat="type in getTypes()" ng-value="type">{{type}}</md-option>
+                    </md-select>
+                </td>
+                <td md-cell>
+                    <md-select ng-model="filterSelect.block" placeholder="Block" style="width: 40px;">
+                        <md-option ng-repeat="block in getBlocks()" ng-value="block">{{block}}</md-option>
+                    </md-select>
+                </td>
+                <td md-cell hide-gt-xs show-gt-md>
+                    <md-datepicker ng-model="filterDate.createDate" md-placeholder="Enter date">
+                    </md-datepicker>
+                </td>
+                <td md-cell hide-gt-xs show-gt-md>
+                    <md-datepicker ng-model="filterDate.updateDate" md-placeholder="Enter date">
+                    </md-datepicker>
+                </td>
+                <td md-cell hide-gt-xs show-gt-md>
+                    <input ng-model="filterDetails.author" placeholder="Author" style="width: 90px;">
+                </td>
+            </tr>
             <tr md-row md-select="user" md-on-select="logItem" md-auto-select="options.autoSelect"
-                ng-repeat="user in users.data | filter: query.filter | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit"
+                ng-repeat="user in users.data | filter: query.filter | filter: filterDetails | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit"
                 ng-disabled="user.pid=='admin'">
                 <td md-cell ng-click="editUser($event, user)">
                     <md-button
