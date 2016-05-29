@@ -20,9 +20,10 @@ require(ROOT_DIR . 'system/view.php');
 require(ROOT_DIR . 'system/controller.php');
 require(ROOT_DIR . 'system/wrapper.php');
 require(ROOT_DIR . 'system/loader.php');
+Loader::loadBaseFiles();
 Loader::loadAllFiles(APP_DIR . 'helpers');
-Loader::loadAllFiles(APP_DIR . 'models');
 Loader::loadAllFiles(APP_DIR . 'models/db');
+Loader::loadAllFiles(APP_DIR . 'models');
 
 // Define base URL
 global $config;
